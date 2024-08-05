@@ -10,6 +10,7 @@ builds:
     ldflags:
       - -s -w -X "ginapp/conf.BuildVersion={{.Version}}"
       - -X "main.GoVersion={{.Env.GOVERSION}}"
+
     env:
       - CGO_ENABLED=0
 archives:

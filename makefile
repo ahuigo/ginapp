@@ -48,21 +48,25 @@ benchcpu:
 profcpu:
 	go tool pprof http://127.0.0.1:4500/debug/pprof/profile
 
-######################### test ##########################################
-ALL_SRC := $(shell find . -name "*_test.go" | grep -v \
-	-e ".*/\..*" \
-	-e ".*/_.*" \
-	-e ".*/mocks.*")
-TEST_DIRS := $(sort $(dir $(filter %_test.go,$(ALL_SRC))))
+######################### test & pkg ##########################################
+msg?=
+.ONESHELL:
+gitcheck:
+	if [[ "$(msg)" = "" ]] ; then echo "Usage: make pkg msg='commit msg'";exit 20; fi
 
-COVERAGE_FILE := cover.out
+.ONESHELL:
+pkg: gitcheck test
+	{ hash newversion.py 2>/dev/null && newversion.py version;} ;  { echo version `cat version`; }
+	git commit -am "$(msg)"
+	#jfrog "rt" "go-publish" "go-pl" $$(cat version) "--url=$$GOPROXY_API" --user=$$GOPROXY_USER --apikey=$$GOPROXY_PASS
+	v=`cat version` && git tag "$$v" && git push origin "$$v" && git push origin HEAD
+
 .PHONY: test
-test:
-	echo $(TEST_DIRS)
-	@rm -f test.log
-	@rm -f $(COVERAGE_FILE)
-	@for dir in $(TEST_DIRS); do \
-		go test -timeout 20m -coverprofile="cover.tmp" "$$dir" | tee -a test.log; \
-		cat cover.tmp >> $(COVERAGE_FILE); \
-	done;
-	@rm -f cover.tmp
+test: 
+	go test -race -coverprofile cover.out -coverpkg "./..." -failfast ./...
+cover: test
+	go tool cover -html=cover.out
+race: 
+	go test -race -failfast ./...
+fmt:
+	gofmt -s -w .
