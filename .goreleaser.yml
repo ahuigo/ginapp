@@ -13,7 +13,7 @@ builds:
       - -X "main.GoVersion={{.Env.GOVERSION}}"
 
     env:
-      - CGO_ENABLED=0
+      - CGO_ENABLED=1 # default is 1
 archives:
   - id: tar.gz
     format: tar.gz
