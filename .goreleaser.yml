@@ -8,6 +8,8 @@ builds:
     ignore:
       - goos: darwin
         goarch: 386
+      - goos: darwin
+        goarch: amd64
     ldflags:
       - -s -w -X "ginapp/conf.BuildVersion={{.Version}}"
       - -X "main.GoVersion={{.Env.GOVERSION}}"
