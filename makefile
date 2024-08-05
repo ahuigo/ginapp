@@ -8,12 +8,6 @@ init:
 	#go install github.com/swaggo/swag/cmd/swag@latest -insecure
 	#go install github.com/swaggo/swag/cmd/swag@v1.8.1
 	go install github.com/swaggo/swag/cmd/swag@latest
-install:
-	# go install .
-	go install -ldflags="-s -w -X ginapp/conf.BuildDate=$(shell date -Iseconds) -X ginapp/conf.BuildBranch=$(shell git rev-parse --abbrev-ref HEAD)" 
-	#go build -o ~/bin/ginapp .
-build:
-	go build -ldflags="-s -w -X ginapp/conf.BuildDate=$(shell date -Iseconds) -X ginapp/conf.BuildBranch=$(shell git rev-parse --abbrev-ref HEAD)" -o ginapp main.go
 generate:
 	#//go:generate swag init --parseDependency --parseInternal -g description.go -o ./docs
 	go generate
@@ -60,6 +54,26 @@ pkg: gitcheck test
 	git commit -am "$(msg)"
 	#jfrog "rt" "go-publish" "go-pl" $$(cat version) "--url=$$GOPROXY_API" --user=$$GOPROXY_USER --apikey=$$GOPROXY_PASS
 	v=`cat version` && git tag "$$v" && git push origin "$$v" && git push origin HEAD
+
+LDFLAGS=-ldflags="-s -w -X ginapp/conf.BuildDate=$(shell date -Iseconds) -X ginapp/conf.BuildBranch=$(shell git rev-parse --abbrev-ref HEAD)"
+
+install:
+	# go install .
+	go install $(LDFLAGS) 
+	#go build -o ~/bin/ginapp .
+
+build:
+	#go build $(LDFLAGS) -o ginapp main.go
+	go build $(LDFLAGS) -o ginapp
+
+.ONESHELL:
+build-linux: test
+	{ hash newversion.py 2>/dev/null && newversion.py version;} ;  { echo version `cat version`; }
+	GOOS=linux GOARCH=amd64 go build $(LDFLAGS) -o dist/ginapp-linux-amd64 
+	GOOS=darwin GOARCH=arm64 go build $(LDFLAGS) -o dist/ginapp-darwin-arm64
+	v=`cat version` && \
+	gh release create $$v --notes $$v dist/ginapp-linux-amd64 dist/ginapp-darwin-arm64
+
 
 .PHONY: test
 test: 
