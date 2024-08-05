@@ -68,6 +68,7 @@ build:
 
 .ONESHELL:
 build-linux: test
+	# gh auth -h ; https://github.com/settings/applications
 	{ hash newversion.py 2>/dev/null && newversion.py version;} ;  { echo version `cat version`; }
 	GOOS=linux GOARCH=amd64 go build $(LDFLAGS) -o dist/ginapp-linux-amd64 
 	GOOS=darwin GOARCH=arm64 go build $(LDFLAGS) -o dist/ginapp-darwin-arm64
