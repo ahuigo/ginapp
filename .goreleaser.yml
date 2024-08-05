@@ -8,8 +8,8 @@ builds:
       - goos: darwin
         goarch: 386
     ldflags:
-      - -s -w -X "main.BuildVersion={{.Version}}"
-      - -s -w -X "main.GoVersion={{.Env.GOVERSION}}"
+      - -s -w -X "ginapp/conf.BuildVersion={{.Version}}"
+      - -X "main.GoVersion={{.Env.GOVERSION}}"
 
     env:
       - CGO_ENABLED=0

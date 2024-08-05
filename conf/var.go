@@ -4,6 +4,6 @@ package conf
 var (
 	BuildCommitId = "000"
 	BuildBranch   = ""
-	BuildDate     = ""
-	BuildVersion  = ""
+	BuildDate     = "0"
+	BuildVersion  = "0"
 )

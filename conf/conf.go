@@ -2,6 +2,7 @@ package conf
 
 import (
 	"bytes"
+	"fmt"
 	"ginapp/config"
 	"ginapp/fslib"
 	"log"
@@ -18,7 +19,7 @@ import (
 func initGcConf() {
 	debug.SetGCPercent(1000)
 	runtime.GOMAXPROCS(runtime.NumCPU())
-	log.Println("max procs:", runtime.GOMAXPROCS(0), runtime.NumCPU())
+	fmt.Printf("Max procs: %d, cpu: %d\n", runtime.GOMAXPROCS(0), runtime.NumCPU())
 }
 func init() {
 	initGcConf()

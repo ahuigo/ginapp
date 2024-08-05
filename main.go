@@ -18,6 +18,7 @@ import (
 )
 
 func main() {
+	fmt.Printf("BuildDate: %s, version: %s\n", conf.BuildDate, conf.BuildVersion)
 	config := conf.GetConf()
 	port := flag.String("p", "4500", "Public Server Port")
 	dir := flag.String("d", "", "change directory")
@@ -25,7 +26,6 @@ func main() {
 	staticBasePath := flag.String("s4", "", "static 404 path, e.g.: /a/404.html")
 	usage := flag.Usage
 	flag.Usage = func() {
-		fmt.Printf("date: %s, version: %s\n", conf.BuildDate, conf.BuildVersion)
 		usage()
 	}
 	flag.Parse()
