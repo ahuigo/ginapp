@@ -1,0 +1,29 @@
+<body>
+<script type="text/javascript">
+    function requestForm( method = 'post', url, data) {
+        if(!url){return}
+        if(url==location.href||location.pathname.endsWith(url)){
+            return
+        }
+        const form = document.createElement('form');
+        form.method = method;
+        form.action = url;
+
+        if(data){
+            for (const [key, value] of Object.entries(data)) {
+                const hiddenField = document.createElement('input');
+                hiddenField.type = 'hidden';
+                hiddenField.name = key;
+                hiddenField.value = value;
+                form.appendChild(hiddenField);
+            }
+        }
+        document.body.appendChild(form);
+        form.submit();
+    }
+    const data = {{.body}}
+    requestForm('post', {{.url}}, data)
+</script>
+redirect to: {{.url}}
+Date: {{.now1 | formatAsDate}}
+</body>

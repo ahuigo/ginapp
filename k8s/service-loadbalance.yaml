@@ -1,0 +1,13 @@
+# kubectl apply -f service-loadbalance.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: ginapp
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 4501        # Service 对外暴露的端口, 
+    targetPort: 4500  # service流量转发到的 Pod 上的端口
+    nodePort: 30080  # 不写就随机分配的一个在 30000-32767的node端口。端口流量会被转发到 targetPort 上
+  selector:
+    app: ginapp

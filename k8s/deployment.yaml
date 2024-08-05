@@ -1,0 +1,29 @@
+# kubectl apply -f deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ginapp # kubectl get deployments -l app=ginapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels: # 用于service选择要管理的Pod
+      app: ginapp
+  template:
+    metadata:
+      labels:
+        app: ginapp # 必须与service的selector匹配才会被选中
+    spec:
+      containers:
+      - name: ginapp  
+        image: ginapp:latest #image: registry.example.com/ginapp:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 4500
+
+      - name: ginapp2
+        image: ginapp:latest
+        imagePullPolicy: IfNotPresent
+        command: ["./main"]
+        args: ["-p", "5500"]
+        ports:
+        - containerPort: 5500

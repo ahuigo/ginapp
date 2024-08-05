@@ -1,0 +1,248 @@
+definitions:
+  router.HTTPError:
+    properties:
+      error:
+        type: string
+    type: object
+  router.User:
+    properties:
+      city:
+        description: form 接收多个值
+        example:
+        - Bj
+        - Tj
+        items:
+          type: string
+        type: array
+      class_name:
+        description: 班名
+        example: class1
+        type: string
+      country:
+        description: 国家
+        type: string
+      extra:
+        description: 这是extra扩展字段
+      id:
+        example: 1
+        format: int64
+        type: integer
+      name:
+        description: 姓名
+        example: Alex
+        type: string
+      time:
+        description: time rfc3339
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /user:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Add user
+        in: body
+        name: body-params
+        required: true
+        schema:
+          $ref: '#/definitions/router.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/router.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/router.HTTPError'
+      summary: 添加用户(body)
+      tags:
+      - user
+  /user/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 获取用户详情
+      parameters:
+      - default: token=xxx
+        description: token
+        in: header
+        name: Cookie
+        type: string
+      - description: Account ID
+        enum:
+        - 1
+        - 2
+        - 3
+        in: path
+        name: id
+        required: true
+        type: integer
+      - default: tracd_id_10
+        description: trace-id
+        in: query
+        name: trace_id
+        required: true
+        type: string
+      - collectionFormat: csv
+        description: form 接收多个值
+        example:
+        - Bj
+        - Tj
+        in: query
+        items:
+          type: string
+        name: city
+        type: array
+      - description: 班名
+        example: class1
+        in: query
+        name: class_name
+        type: string
+      - description: 国家
+        in: query
+        name: country
+        type: string
+      - example: 1
+        format: int64
+        in: query
+        name: id
+        type: integer
+      - description: 姓名
+        example: Alex
+        in: query
+        name: name
+        type: string
+      - description: time rfc3339
+        in: query
+        name: time
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              description: qwerty
+              type: string
+          schema:
+            $ref: '#/definitions/router.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/router.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/router.HTTPError'
+        "500":
+          description: 500 error
+          schema:
+            type: string
+      summary: 获取用户
+      tags:
+      - user
+  /user/upload:
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - collectionFormat: csv
+        description: form 接收多个值
+        example:
+        - Bj
+        - Tj
+        in: formData
+        items:
+          type: string
+        name: city
+        type: array
+      - description: 班名
+        example: class1
+        in: formData
+        name: class_name
+        type: string
+      - description: 国家
+        in: formData
+        name: country
+        type: string
+      - example: 1
+        format: int64
+        in: formData
+        name: id
+        type: integer
+      - description: 姓名
+        example: Alex
+        in: formData
+        name: name
+        type: string
+      - description: time rfc3339
+        in: formData
+        name: time
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/router.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/router.HTTPError'
+      tags:
+      - user
+  /users:
+    get:
+      parameters:
+      - collectionFormat: csv
+        description: form 接收多个值
+        example:
+        - Bj
+        - Tj
+        in: query
+        items:
+          type: string
+        name: city
+        type: array
+      - description: 班名
+        example: class1
+        in: query
+        name: class_name
+        type: string
+      - description: 国家
+        in: query
+        name: country
+        type: string
+      - example: 1
+        format: int64
+        in: query
+        name: id
+        type: integer
+      - description: 姓名
+        example: Alex
+        in: query
+        name: name
+        type: string
+      - description: time rfc3339
+        in: query
+        name: time
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/router.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/router.HTTPError'
+      summary: Get用户List(query)
+      tags:
+      - user
+swagger: "2.0"

@@ -1,0 +1,21 @@
+# kubectl apply -f service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: ginapp # http://ginapp:4501
+spec:
+  type: NodePort # 默认type=ClusterIP
+  ports:
+  - port: 4501        # Service 对外暴露的端口, 
+    targetPort: 4500  # service流量转发到的 Pod 上的端口
+    nodePort: 30080  # 不写就随机分配的一个在 30000-32767的node端口。端口流量会被转发到 targetPort 上
+  selector:
+    app: ginapp # 请求会被发送给集群里的label 为ginapp 的pods
+
+############################## ip 分类　#######################
+# ClusterIP(默认): 
+#   1. 仅在集群内部可访问，默认k8s会为 Service 分配一个集群内部的 IP 地址, 其他的 Pod 可以使用这个 IP 地址或者 Service 的名称ginapp来访问 Service
+# NodePort:
+#   1. 可以从集群外部访问 NodeIP:NodePort
+# PodIP:
+#  1. PodIP:targetPort 可以被集群内的其他 Pod 用于直接通信，但它们通常通过 Service 进行通信
