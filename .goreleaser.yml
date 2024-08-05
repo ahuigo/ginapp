@@ -1,9 +1,10 @@
 # https://goreleaser.com/customization/templates/
+version: 2
 builds:
   - goos:
       - linux
-      - windows
       - darwin
+      # - windows
     ignore:
       - goos: darwin
         goarch: 386
