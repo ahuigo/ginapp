@@ -1,17 +1,16 @@
-name: Release
+name: Release Tag
 
 on:
   push: 
-    branches: [main]
-    #tags: 'v*'
-  pull_request:
-    branches: [main]
+    tags: 'v*'
+  # pull_request:
+  #   branches: [main]
 
 jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/heads/main')
+    if: startsWith(github.ref, 'refs/tags/v')
     permissions: 
       contents: write
     steps:
@@ -24,7 +23,7 @@ jobs:
       - name: Set GOVERSION
         run: echo "GOVERSION=$(go version | sed -r 's/go version go(.*)\ .*/\1/')" >> $GITHUB_ENV
       - name: Set AppVersion
-        run: echo "VERSION=$(date -Iseconds)" >> $GITHUB_ENV
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
       - name: Show version
         run: echo ${{ env.GOVERSION }} ${{ env.VERSION }}
 
@@ -36,3 +35,22 @@ jobs:
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Set up QEMU
+      #   uses: docker/setup-qemu-action@v3
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v3
+      # - name: Login to DockerHub
+      #   uses: docker/login-action@v3
+      #   with:
+      #     username: ahuig
+      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+      # - name: Push to DockerHub
+      #   id: docker_build
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     push: true
+      #     platforms: linux/amd64,linux/arm64
+      #     tags: ahuig/ginapp:${{ env.VERSION }}
+      # - name: Show docker image digest
+      #   run: echo ${{ steps.docker_build.outputs.digest }}
