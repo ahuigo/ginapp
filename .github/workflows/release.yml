@@ -24,7 +24,10 @@ jobs:
       - name: Set GOVERSION
         run: echo "GOVERSION=$(go version | sed -r 's/go version go(.*)\ .*/\1/')" >> $GITHUB_ENV
       - name: Set AppVersion
-        run: echo "VERSION=$(date -Iseconds)" >> $GITHUB_ENV
+        run: |
+          echo "VERSION=$(date -Iseconds)" >> $GITHUB_ENV
+          echo GORELEASER_CURRENT_TAG=v0.1.0 >> $GITHUB_ENV
+          echo GORELEASER_PREVIOUS_TAG=v0.1.1 >> $GITHUB_ENV
       - name: Show version
         run: echo ${{ env.GOVERSION }} ${{ env.VERSION }}
 

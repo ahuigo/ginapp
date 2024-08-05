@@ -1,8 +1,4 @@
 # https://goreleaser.com/customization/templates/
-env:
-  # https://goreleaser.com/cookbooks/set-a-custom-git-tag/
-  - GORELEASER_CURRENT_TAG=v0.1.0
-  - GORELEASER_PREVIOUS_TAG=v0.1.1
 builds:
   - goos:
       - linux
@@ -14,7 +10,6 @@ builds:
     ldflags:
       - -s -w -X "ginapp/conf.BuildVersion={{.Version}}"
       - -X "main.GoVersion={{.Env.GOVERSION}}"
-
     env:
       - CGO_ENABLED=0
 archives:
