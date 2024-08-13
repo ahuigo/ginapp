@@ -33,6 +33,7 @@ type Config struct {
 }
 type App struct {
 	Mode string `mapstructure:"mode"`
+	Port string 
 }
 type PgConf struct {
 	Host     string `mapstructure:"host"`

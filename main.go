@@ -40,6 +40,7 @@ func main() {
 
 	// gin+port
 	engine := gin.New()
+	config.App.Port = *port
 	//  https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies
 	engine.SetTrustedProxies([]string{"127.0.0.1"})
 	router.Register(engine, *staticFS, *staticBasePath)

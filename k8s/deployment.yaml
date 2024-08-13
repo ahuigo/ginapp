@@ -14,13 +14,13 @@ spec:
         app: ginapp # 必须与service的selector匹配才会被选中
     spec:
       containers:
-      - name: ginapp  
+      - name: ginapp1  
         image: ginapp:latest #image: registry.example.com/ginapp:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 4500
 
-      - name: ginapp2
+      - name: ginapp2 # ginapp1 内部通过127.0.0.1:5500 访问 ginapp2(因为pod 内的containers 共享网络)
         image: ginapp:latest
         imagePullPolicy: IfNotPresent
         command: ["./main"]

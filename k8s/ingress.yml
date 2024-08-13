@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ginapp-ingress
+spec:
+  rules:
+    - host: ginapp.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ginapp
+                port:
+                  number: 4501
+          - path: /dump           # 优先匹配最长的路径. /dump/xxx -> /dump/xxx
+            pathType: Prefix    # 3种　Prefix: 前缀匹配; Exact: 完全相等；ImplementationSpecific: 由 Ingress 控制器来决定
+            backend:
+              service:
+                name: ginapp  # 也可以是其他service
+                port:
+                  number: 5500

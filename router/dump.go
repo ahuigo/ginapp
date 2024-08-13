@@ -3,6 +3,7 @@ package router
 import (
 	"bytes"
 	"fmt"
+	"ginapp/conf"
 	"io"
 	"net/http"
 	neturl "net/url"
@@ -60,6 +61,7 @@ func sendBody(c *gin.Context) {
 		" proto:" + c.Request.Proto + " clientip:" +
 		c.ClientIP() + "\n"
 	res += dumpRequestHeader(c.Request) + "\n"
+	res += fmt.Sprintf("listen port: %s\n", conf.GetConf().App.Port)
 	res += fmt.Sprintf("c.Request.Host(include port):%s\n", c.Request.Host)
 	res += fmt.Sprintf("c.Request.RequestURI:%s\n", c.Request.RequestURI)
 	res += fmt.Sprintf("c.Request.URL.Scheme:%s\n", c.Request.URL.Scheme)
