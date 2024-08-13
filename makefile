@@ -22,18 +22,7 @@ docker:
 	docker run -p 4501:4500 --name gin1 --rm -it  ginapp ./main -p 4500
 
 deploy-step:
-	# 创建 Deployment
-	kubectl apply -f k8s/deployment.yaml
-	kubectl get deployments
-	kubectl get deployments --all-namespaces
-
-	# 设置port 暴露服务
-	kubectl apply -f k8s/service.yaml
-
-	# 获取这个 Service 的 URL,  minikube也可以用: minikube service ginapp --url
-	kubectl get service ginapp
-	# 如果服务是通过ingress 暴露的，可以通过下面的命令获取
-	kubectl get ingress ginapp
+	zsh k8s/deploy.sh
 
 ######################### bench/perf #################################
 benchcpu:
