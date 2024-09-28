@@ -47,15 +47,16 @@ func Register(r *gin.Engine, staticFS bool, path404 string) {
 	}
 
 	// router
-	r.GET("/gorm/insert", insertHandler)
-	// curl m:4500/f/r/my/a.txt  -o a.txt
-	r.GET("/f/r/*path", fileReadHandler)
-	// curl m:4500/f/w/my/a.txt -F 'file1=@go.mod' -F 'name=alex'
-	r.POST("/f/w/*path", fileWriteHandler)
 	r.GET("/api/panic", panicApi)
 	r.GET("/api/conf", confApi)
 	r.GET("/dump/*anypath", DumpServer)
 	r.POST("/dump/*anypath", DumpServer)
+	r.GET("/gorm/insert", insertHandler)
+	r.GET("/go/:size", goHandler)
+	// curl m:4500/f/r/my/a.txt  -o a.txt
+	r.GET("/f/r/*path", fileReadHandler)
+	// curl m:4500/f/w/my/a.txt -F 'file1=@go.mod' -F 'name=alex'
+	r.POST("/f/w/*path", fileWriteHandler)
 	r.GET("/redirect/:code", RedirectServer)
 	r.POST("/redirect/form", RedirectServer)
 	r.GET("/echo/:size", EchoServer)

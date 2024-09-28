@@ -7,7 +7,7 @@ toolchain go1.22.1
 require (
 	github.com/DeanThompson/ginpprof v0.0.0-20201112072838-007b1e56b2e1
 	github.com/ahuigo/gohttptool v0.0.8
-	github.com/ahuigo/goos-tools v0.0.16
+	github.com/ahuigo/goos-tools v1.0.2
 	github.com/gin-gonic/gin v1.9.1
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/viper v1.19.0

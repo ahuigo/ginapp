@@ -6,6 +6,10 @@ github.com/ahuigo/gohttptool v0.0.8 h1:+WMHgxHY6h5FiFhF2ETI0K1aCw/Ug0vjlveCmIJ88
 github.com/ahuigo/gohttptool v0.0.8/go.mod h1:R4J/N7gF/ozknJUh4EbBoGufvjcC4V7v5wOcpkSfrXI=
 github.com/ahuigo/goos-tools v0.0.16 h1:h8DSBGnYTDfYBAG5krEKUlxWCkgd+nP0CRKrcRgJI8Q=
 github.com/ahuigo/goos-tools v0.0.16/go.mod h1:bL1nKGcfjW7Tq8ixzwsdDrljVJaqfDoGrJTvIKXKc9Y=
+github.com/ahuigo/goos-tools v1.0.1 h1:r1+SjNLb5R+8fjIyIB+CqsLQ6+U1FGGjhgXaAGj1cYk=
+github.com/ahuigo/goos-tools v1.0.1/go.mod h1:bL1nKGcfjW7Tq8ixzwsdDrljVJaqfDoGrJTvIKXKc9Y=
+github.com/ahuigo/goos-tools v1.0.2 h1:GEMqUO5eC8+9Hhx3uZP5TClH12x/fHkUzXbK5VeKpCs=
+github.com/ahuigo/goos-tools v1.0.2/go.mod h1:Nrimyp/vgy/dzFeRtwFmQXUZ28HYs+h3rVQH+HhZyz8=
 github.com/bytedance/sonic v1.5.0/go.mod h1:ED5hyg4y6t3/9Ku1R6dU/4KyJ48DZ4jPhfY1O2AihPM=
 github.com/bytedance/sonic v1.10.0-rc/go.mod h1:ElCzW+ufi8qKqNW0FY314xriJhyJhuoJ3gFZdAHF7NM=
 github.com/bytedance/sonic v1.10.2 h1:GQebETVBxYB7JGWJtLBi07OVzWwt+8dWA00gEVW2ZFE=

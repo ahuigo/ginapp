@@ -9,3 +9,15 @@ Simple http server for development based on golang and gonic
 <!-- [![tag](https://img.shields.io/github/tag/ahuigo/ginapp.svg)](https://github.com/ahuigo/ginapp/tags) -->
 <!-- [![Coverage](https://img.shields.io/codecov/c/github/ahuigo/ginapp)](https://codecov.io/gh/ahuigo/ginapp) -->
 <!-- [![Go report](https://goreportcard.com/badge/github.com/ahuigo/ginapp)](https://goreportcard.com/report/github.com/ahuigo/ginapp) -->
+
+## Usage
+install:
+
+    make install
+    # or
+    wget https://github.com/ahuigo/ginapp/releases/download/v0.1.8/ginapp-linux-amd64 -o ~/bin/ginapp
+    chmod ~/bin/ginapp
+
+Use:
+
+    ginapp -p 4500
