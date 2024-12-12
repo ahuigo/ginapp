@@ -1,4 +1,16 @@
-LDFLAGS=-ldflags="-s -w -X ginapp/conf.BuildDate=$(shell date -Iseconds) -X ginapp/conf.BuildBranch=$(shell git rev-parse --abbrev-ref HEAD)"
+SERVICE_NAME ?= ginapp
+# shell git rev-parse --abbrev-ref HEAD
+BRANCH 		 ?= $(shell git name-rev --name-only HEAD|cut -d '/' -f 3-)
+REVISION     ?= $(shell git rev-parse HEAD)
+BUILD_DATE   ?= $(shell date -I'seconds')
+BUILD_USER   ?= $(shell whoami)@$(shell hostname)
+
+VERSION_LDFLAGS := \
+	-X ${SERVICE_NAME}/conf.BuildCommitId=$(REVISION) \
+	-X ${SERVICE_NAME}/conf.BuildDate=$(BUILD_DATE) \
+	-X ${SERVICE_NAME}/conf.BuildBranch=$(BRANCH)
+LDFLAGS=-ldflags="-s -w $(VERSION_LDFLAGS)" 
+
 
 ############################ develop #############################################
 start:
@@ -45,7 +57,6 @@ pkg: gitcheck test
 	git commit -am "$(msg)"
 	#jfrog "rt" "go-publish" "go-pl" $$(cat version) "--url=$$GOPROXY_API" --user=$$GOPROXY_USER --apikey=$$GOPROXY_PASS
 	v=`cat version` && git tag "$$v" && git push origin "$$v" && git push origin HEAD
-
 
 install:
 	# go install .

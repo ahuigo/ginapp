@@ -135,6 +135,5 @@ func sendCookie(c *gin.Context) {
 	// Set-Cookie: count=1; Path=/; Domain=ahui.io; Max-Age=172800
 	c.SetCookie("count", countStr, 86400, "", hostname, false, false)
 	c.SetCookie("count", countStr, 86400, "", ".ahuigo1.io", false, false)
-	c.SetCookie("count", countStr, 86400, "", "ahuigo2.io", false, false)
 	// fmt.Printf("h:%#v\n", c.Header)
 }

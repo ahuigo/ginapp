@@ -16,7 +16,7 @@ func LogTime(c *gin.Context) {
 	c.Set("example", "12345")
 
 	uri := c.Request.URL.Path + "?" + c.Request.URL.RawQuery
-	log.Println(uri)
+	log.Println(c.Request.Method, uri)
 
 	// next  middleware
 	c.Next()

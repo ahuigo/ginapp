@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	mid "ginapp/middleware"
+	mid "ginapp/router/middleware"
 	statHandler "ginapp/router/stat"
 	tpls "ginapp/router/tpl-server"
 
