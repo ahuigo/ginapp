@@ -14,24 +14,21 @@ import (
 var _path404 = ""
 
 func staticFsHandler(r *gin.Engine, path404 string) {
-	_path404 = path404
+	_path404 = path404 // index.html
 	// redirect /index.html to /
 	// r.Static("/", "./")
-
-	staticFS(&r.RouterGroup, "/", gin.Dir("./", false))
+	staticFS(r, "/", "./")
 }
 
-func staticFS(group *gin.RouterGroup, relativePath string, fs http.FileSystem) {
+func staticFS(r *gin.Engine, relativePath string, staticDir string) {
 	if strings.Contains(relativePath, ":") || strings.Contains(relativePath, "*") {
 		panic("URL parameters can not be used when serving a static folder")
 	}
-	handler := createStaticHandler(group, relativePath, fs)
-	urlPattern := path.Join(relativePath, "/*filepath")
-
-	// Register GET and HEAD handlers
-	group.GET(urlPattern, handler)
-	group.HEAD(urlPattern, handler)
+	fs:=gin.Dir(staticDir, true)
+	handler := createStaticHandler(&r.RouterGroup, relativePath, fs)
+	r.NoRoute(handler)
 }
+
 
 func corsMiddleware(c *gin.Context) {
 	r := c.Request
@@ -48,10 +45,7 @@ func createStaticHandler(group *gin.RouterGroup, relativePath string, fs http.Fi
 
 	return func(c *gin.Context) {
 		corsMiddleware(c)
-		filepath := c.Param("filepath")
-		if filepath == "/" {
-			filepath = "index.html"
-		}
+		filepath := c.Request.URL.Path // 默认/会变成展示 index.html
 		filepath = fslib.SafePath(filepath)
 		// Check if file exists and/or if we have permission to access it
 		f, err := fs.Open(filepath)

@@ -29,7 +29,6 @@ var (
 func Register(r *gin.Engine, staticFS bool, path404 string) {
 	if staticFS {
 		staticFsHandler(r, path404)
-		return
 	}
 	// set tpl router // template
 	tpls.TplRouter(r)
